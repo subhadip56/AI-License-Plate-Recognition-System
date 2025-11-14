@@ -1,0 +1,8 @@
+ultralytics
+easyocr
+opencv-python
+numpy
+streamlit
+torch
+pandas
+deep-sort-realtime
