@@ -2,7 +2,7 @@
 
 # 🚗 Global ALPR System 🌍
 
-### High-Performance, Real-Time License Plate Recognition (ALPR)
+### Real-Time License Plate Recognition (ALPR)
 
 <p align="center">
   <img alt="Python 3.10+" src="https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python" />
