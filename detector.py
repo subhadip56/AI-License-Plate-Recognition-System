@@ -8,7 +8,7 @@ class which handles:
 - Processing a video frame-by-frame.
 - Running detection, tracking, and OCR.
 - Applying visual effects (spotlight, HUD, enlarged preview).
-- Saving the final annotated video.
+- Saving the final annotated video to a temporary file.
 """
 
 import warnings
@@ -21,6 +21,7 @@ import torch
 import os
 import time
 import numpy as np
+import tempfile  # <-- IMPORT tempfile
 
 # --- Suppress specific warnings for a cleaner console output ---
 warnings.filterwarnings(
@@ -128,10 +129,11 @@ class SimpleALPR:
         frame_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         frame_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-        # Configure video output
-        os.makedirs("Outputs", exist_ok=True)
-        timestamp = int(time.time())
-        output_path = f"Outputs/output_{timestamp}.mp4"
+        # --- ★★★ CHANGE: Create a Temporary File for the output video ★★★ ---
+        # We no longer save to the 'Outputs/' folder.
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_out:
+            output_path = temp_out.name
+        # --- ★★★ END OF CHANGE ★★★ ---
         
         # Use 'avc1' (H.264) for web compatibility, fall back to 'mp4v'
         fourcc = cv2.VideoWriter_fourcc(*'avc1')
