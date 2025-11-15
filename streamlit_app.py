@@ -1,12 +1,12 @@
 """
 streamlit_app.py
 
-This file creates the web interface for the ALPR system using Streamlit.
+Streamlit interface for the ALPR system.
 
-It allows the user to:
-- Upload a video file.
-- See a progress bar during processing.
-- Download the final annotated video output.
+Features:
+- Upload a video
+- Show processing progress
+- Download the processed video
 """
 
 import streamlit as st
@@ -33,43 +33,47 @@ MODEL_PATH = "models/best.torchscript"
 
 # --- Model Check ---
 if not os.path.exists(MODEL_PATH):
-    st.error(f"FATAL ERROR: Model file not found at '{MODEL_PATH}'. "
-             "Please ensure 'best.torchscript' exists inside the 'models' folder.")
+    st.error(
+        f"FATAL ERROR: Model file not found at '{MODEL_PATH}'. "
+        "Please upload 'best.torchscript' to the 'models' folder."
+    )
     st.stop()
 
 
-# --- File Uploader ---
+# --- File Upload ---
 video_file = st.file_uploader(
-    "Drag and drop a video file",
+    "Select or drag-and-drop a video file",
     type=VIDEO_TYPES
 )
 
 
 if video_file:
 
-    # Save uploaded file to a temporary location
+    # Save uploaded file to a temp path
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp:
         temp.write(video_file.read())
         input_video_path = temp.name
 
-    st.info("Processing video... Please wait.")
+    st.info("Processing your video... Please wait.")
 
-    # Progress bar and label
+    # Progress components
     progress_bar = st.progress(0)
     progress_text = st.empty()
 
     def progress_cb(current_frame, total_frames):
-        """Callback to update progress bar during video processing."""
+        """Callback updating the progress bar."""
         if total_frames > 0:
             percent = current_frame / total_frames
             progress_bar.progress(percent)
-            progress_text.text(f"Processing frame {current_frame}/{total_frames} "
-                               f"({int(percent * 100)}%)")
+            progress_text.text(
+                f"Processing frame {current_frame}/{total_frames} "
+                f"({int(percent * 100)}%)"
+            )
         else:
             progress_text.text(f"Processing frame {current_frame}...")
 
     try:
-        # Initialize ALPR
+        # Initialize ALPR processor
         alpr = SimpleALPR(MODEL_PATH)
 
         with st.spinner("Running detection, tracking, and OCR..."):
@@ -78,34 +82,24 @@ if video_file:
         st.success("🎉 Processing Complete!")
         progress_text.empty()
 
-        # ----------------------------------------------------------------------
-        # DOWNLOAD BUTTON (100% reliable on Streamlit Cloud)
-        # ----------------------------------------------------------------------
-        st.subheader("Download Annotated Video")
+        # ------------------------------------------------------------
+        # Download Button (Always Works, Streamlit Cloud Compatible)
+        # ------------------------------------------------------------
+        st.subheader("Download Processed Video")
 
         with open(output_path, "rb") as f:
             st.download_button(
-                label="⬇️ Download Processed Video",
+                label="⬇️ Download Annotated Video",
                 data=f,
                 file_name="processed_video.mp4",
                 mime="video/mp4"
             )
 
-        # ----------------------------------------------------------------------
-        # Optional Preview (Streamlit Cloud may not support some codecs)
-        # ----------------------------------------------------------------------
-        st.info("Attempting to display video preview (may not work on Streamlit Cloud).")
-
-        try:
-            st.video(output_path)
-        except:
-            st.warning("Video preview unavailable, but download works fine.")
-
     except Exception as e:
-        st.error(f"An error occurred during processing: {e}")
+        st.error(f"❌ Error during processing: {e}")
         print("ERROR:", e)
 
     finally:
-        # Clean up temporary input file
+        # Clean up temporary uploaded input file
         if os.path.exists(input_video_path):
             os.remove(input_video_path)
