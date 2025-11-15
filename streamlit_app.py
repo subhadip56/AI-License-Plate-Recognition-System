@@ -82,9 +82,6 @@ if video_file:
         st.success("🎉 Processing Complete!")
         progress_text.empty()
 
-        # ------------------------------------------------------------
-        # Download Button (Always Works, Streamlit Cloud Compatible)
-        # ------------------------------------------------------------
         st.subheader("Download Processed Video")
 
         with open(output_path, "rb") as f:
@@ -96,10 +93,20 @@ if video_file:
             )
 
     except Exception as e:
-        st.error(f"❌ Error during processing: {e}")
+        st.error(f"Error during processing: {e}")
         print("ERROR:", e)
 
     finally:
-        # Clean up temporary uploaded input file
         if os.path.exists(input_video_path):
             os.remove(input_video_path)
+
+
+# --- Footer ---
+st.markdown(
+    """
+    <div style="text-align: center; opacity: 0.6; padding-top: 30px; font-size: 14px;">
+        Made with ❤️ by <b>Subhadip Malakar</b>
+    </div>
+    """,
+    unsafe_allow_html=True
+)

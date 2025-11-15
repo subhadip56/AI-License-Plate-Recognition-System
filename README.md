@@ -92,7 +92,6 @@ It processes uploaded videos and outputs:
 
 ## 📁 Project Structure
 
-Your repository contains only essential files (clean and GitHub-friendly):
 
 ```
 ALPR-SYSTEM/
@@ -105,7 +104,6 @@ ALPR-SYSTEM/
 └── README.md
 ```
 
-**Not included in repo**: `__pycache__`, `Outputs`, `videos`, temporary files.
 
 ---
 
