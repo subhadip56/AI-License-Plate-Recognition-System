@@ -95,7 +95,7 @@ It processes uploaded videos and outputs:
 
 ```
 ALPR-SYSTEM/
-├── models/             
+├── models/best.torchscript            
 ├── detector.py           
 ├── streamlit_app.py      
 ├── utils.py             
