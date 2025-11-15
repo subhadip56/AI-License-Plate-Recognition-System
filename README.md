@@ -35,7 +35,7 @@ It processes uploaded videos and outputs:
 
 ## 🌐 Live Demo
 
-**[https://your-app-link.streamlit.app](https://your-app-link.streamlit.app)**
+**[https://ai-license-plate-recognition-system-4vlwziutnygjva9rjqq9yp.streamlit.app](https://ai-license-plate-recognition-system-4vlwziutnygjva9rjqq9yp.streamlit.app)**
 
 ---
 
