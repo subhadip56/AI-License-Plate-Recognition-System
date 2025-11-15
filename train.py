@@ -25,7 +25,6 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-# --- Environment Checks ---
 
 def _running_in_colab() -> bool:
     """Checks if the script is running in a Google Colab environment."""
@@ -41,7 +40,7 @@ def _mount_drive_if_available(mount_point: str = "/content/drive") -> None:
         print("[INFO] Not in Colab. Skipping Google Drive mount.")
         return
 
-    from google.colab import drive
+    from google.colab import drive  #type: ignore
     print("[INFO] In Colab. Mounting Google Drive...")
     drive.mount(mount_point, force_remount=False)
     print(f"[INFO] Google Drive mounted at {mount_point}")
@@ -142,11 +141,11 @@ def train_yolov8(
         epochs=epochs,
         imgsz=imgsz,
         batch=batch,
-        device=0,  # Assumes Colab GPU. Can be overridden.
+        device=0,  
         project=str(project_dir),
         name="alpr_yolov8s_finetune",
         freeze=freeze,
-        patience=20 # Early stopping patience
+        patience=20 
     )
 
     print("[INFO] Training completed successfully.")
@@ -225,5 +224,4 @@ def main(argv: Optional[list[str]] = None) -> None:
 
 
 if __name__ == "__main__":
-    # This block allows the script to be run from the command line
     main()

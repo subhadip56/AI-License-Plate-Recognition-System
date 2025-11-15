@@ -26,14 +26,11 @@ def enhance(frame):
     try:
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
-        # Use CLAHE for better contrast enhancement than simple equalization
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
         enhanced_gray = clahe.apply(gray)
-        
-        # Convert back to BGR so it can be processed by models expecting 3 channels
+       
         return cv2.cvtColor(enhanced_gray, cv2.COLOR_GRAY2BGR)
     except cv2.error:
-        # Fallback if conversion fails
         return frame
 
 def clean_text(text: str) -> str:
@@ -49,5 +46,4 @@ def clean_text(text: str) -> str:
     """
     if not text:
         return ""
-    # This regex keeps only letters (A-Z) and numbers (0-9)
     return re.sub(r'[^A-Z0-9]', '', text).upper()

@@ -49,14 +49,12 @@ video_file = st.file_uploader(
 
 if video_file:
 
-    # Save uploaded file to a temp path
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp:
         temp.write(video_file.read())
         input_video_path = temp.name
 
     st.info("Processing your video... Please wait.")
 
-    # Progress components
     progress_bar = st.progress(0)
     progress_text = st.empty()
 
@@ -73,7 +71,6 @@ if video_file:
             progress_text.text(f"Processing frame {current_frame}...")
 
     try:
-        # Initialize ALPR processor
         alpr = SimpleALPR(MODEL_PATH)
 
         with st.spinner("Running detection, tracking, and OCR..."):
