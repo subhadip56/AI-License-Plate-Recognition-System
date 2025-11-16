@@ -14,6 +14,18 @@
 
 ---
 
+
+## 🎓 Internship Information
+
+This project was developed as part of the **AICTE – Edunet Foundation – Shell Skills4Future Internship Program (2025)**.
+
+**Intern:** Subhadip Malakar  
+**AICTE Student ID:** STU689eb0a3aee11755230371  
+**Internship ID:** INTERNSHIP_175683301568b724f7b9fba  
+**Duration:** 27th October 2025 – 27th November 2025  
+
+---
+
 ## 📌 Overview
 
 **Global ALPR System** is a real-time Automatic License Plate Recognition application designed using:
@@ -173,4 +185,3 @@ python train.py --api-key YOUR_ROBOFLOW_KEY --epochs 50 --project training_runs
 ```
 
 ---
-
